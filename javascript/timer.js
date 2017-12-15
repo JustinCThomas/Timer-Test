@@ -15,11 +15,11 @@ let timerInterval;
 
 let activeButton = "pause";
 
-function init() {
-  hours.innerHTML = initialCount / (60 * 60 * 1000) % 24;
-  minutes.innerHTML = initialCount / (60 * 1000) % 60;
-  seconds.innerHTML = (initialCount * 1000) % 60;
-  milliseconds.innerHTML = Math.floor((initialCount) % 1000);
+let init = () => {
+  // hours.innerHTML = ("0" + (initialCount / (60 * 60 * 1000) % 24)).slice(-2);
+  // minutes.innerHTML = (initialCount / (60 * 1000)) % 60;
+  // seconds.innerHTML = (initialCount * 1000) % 60;
+  // milliseconds.innerHTML = Math.floor((initialCount) % 1000);
   timerInterval = setInterval(updateTimer , 10);
 
   pauseBtn.addEventListener('click', pauseTimer);
@@ -29,7 +29,7 @@ function init() {
 let updateTimer = () => {
   initialCount -= 10;
 
-  hours.innerHTML = Math.floor(initialCount / (60 * 60 * 1000) % 24);
+  hours.innerHTML = ("0" + Math.floor(initialCount / (60 * 60 * 1000) % 24).toString()).slice(-2);
   minutes.innerHTML = Math.floor((initialCount / (60 * 1000)) % 60);
   seconds.innerHTML = Math.floor((initialCount / 1000) % 60);
   milliseconds.innerHTML = Math.floor((initialCount) % 1000);

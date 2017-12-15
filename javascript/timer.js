@@ -26,13 +26,27 @@ let init = () => {
   resumeBtn.addEventListener('click', resumeTimer);
 }
 
+let calculateTime = () => {
+  let hours = Math.floor(initialCount / (60 * 60 * 1000) % 24);
+  let minutes = Math.floor(initialCount / (60 * 1000) % 60);
+  let seconds = Math.floor((initialCount / 1000) % 60);
+  let milliseconds = Math.floor((initialCount) % 1000);
+  return {
+    hours: hours,
+    minutes: minutes,
+    seconds: seconds,
+    milliseconds: milliseconds
+  }
+}
+
 let updateTimer = () => {
   initialCount -= 10;
+  let timeLeft = calculateTime();
 
-  hours.innerHTML = ("0" + Math.floor(initialCount / (60 * 60 * 1000) % 24).toString()).slice(-2);
-  minutes.innerHTML = Math.floor((initialCount / (60 * 1000)) % 60);
-  seconds.innerHTML = Math.floor((initialCount / 1000) % 60);
-  milliseconds.innerHTML = Math.floor((initialCount) % 1000);
+  hours.innerHTML = ("0" + timeLeft.hours).slice(-2);
+  minutes.innerHTML = ("0" + timeLeft.minutes).slice(-2);
+  seconds.innerHTML = ("0" + timeLeft.seconds).slice(-2);
+  milliseconds.innerHTML = ("00" + timeLeft.milliseconds).slice(-3);
   date = new Date().getMilliseconds();
 }
 

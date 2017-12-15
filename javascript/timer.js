@@ -6,7 +6,7 @@ const milliseconds = document.getElementById("milliseconds");
 const pauseBtn = document.getElementById("pausebtn");
 const resumeBtn = document.getElementById("resumebtn");
 
-// Add Milliseconds for easier debugging
+// Fix timer no longer updating when tab is not in focus
 
 let initialCount = (4 * 60 * 60 * 1000); // hours times minutes times seconds times milliseconds
 let date = new Date().getMilliseconds();
@@ -16,10 +16,11 @@ let timerInterval;
 let activeButton = "pause";
 
 let init = () => {
-  // hours.innerHTML = ("0" + (initialCount / (60 * 60 * 1000) % 24)).slice(-2);
-  // minutes.innerHTML = (initialCount / (60 * 1000)) % 60;
-  // seconds.innerHTML = (initialCount * 1000) % 60;
-  // milliseconds.innerHTML = Math.floor((initialCount) % 1000);
+  let timeLeft = calculateTime();
+  hours.innerHTML = ("0" + timeLeft.hours).slice(-2);
+  minutes.innerHTML = ("0" + timeLeft.minutes).slice(-2);
+  seconds.innerHTML = ("0" + timeLeft.seconds).slice(-2);
+  milliseconds.innerHTML = ("00" + timeLeft.milliseconds).slice(-3);
   timerInterval = setInterval(updateTimer , 10);
 
   pauseBtn.addEventListener('click', pauseTimer);

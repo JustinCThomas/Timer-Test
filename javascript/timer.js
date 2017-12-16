@@ -7,13 +7,17 @@ const millContainer = document.getElementById("milliseconds-container");
 const pauseBtn = document.getElementById("pausebtn");
 const resumeBtn = document.getElementById("resumebtn");
 
-
-// Fix timer no longer updating when tab is not in focus
+// Todos:
+// Use Date().getTime() for milliseconds, not Date().getMilliseconds()
+// Fix/Change code that uses the Date Object.
+// Delete blurUpdateTimer function.
+// Change the original to have a parameter for amount of milliseconds
 
 let initialCount = (4 * 60 * 60 * 1000); // hours times minutes times seconds times milliseconds
 let date = new Date().getMilliseconds();
 let difference;
 let timerInterval;
+let blurTimerInterval;
 
 let activeButton = "pause";
 
@@ -23,12 +27,38 @@ let init = () => {
   minutes.innerHTML = ("0" + timeLeft.minutes).slice(-2);
   seconds.innerHTML = ("0" + timeLeft.seconds).slice(-2);
   milliseconds.innerHTML = ("00" + timeLeft.milliseconds).slice(-3);
+  addEvents();
   timerInterval = setInterval(updateTimer , 10);
+}
+
+let addEvents = () => {
   millContainer.addEventListener('click', () => {
     millContainer.classList.toggle("hide-milliseconds");
   });
   pauseBtn.addEventListener('click', pauseTimer);
   resumeBtn.addEventListener('click', resumeTimer);
+  // Change how the buttons look when they are inactive
+
+  window.addEventListener('focus', () => {
+    if (activeButton === "pause") {
+      let currentTime = new Date().getMilliseconds();
+      clearInterval(blurTimerInterval);
+
+      difference = (currentTime - date);
+      console.log(difference)
+      setTimeout(blurUpdateTimer, difference)
+
+      timerInterval = setInterval(updateTimer , 10);
+    }
+  });
+
+  window.addEventListener('blur', () => {
+    if (activeButton === "pause") {
+      console.log(activeButton)
+      clearInterval(timerInterval);
+      blurTimerInterval = setInterval(blurUpdateTimer, 1000);
+    }
+  });
 }
 
 let calculateTime = () => {
@@ -46,6 +76,17 @@ let calculateTime = () => {
 
 let updateTimer = () => {
   initialCount -= 10;
+  let timeLeft = calculateTime();
+
+  hours.innerHTML = ("0" + timeLeft.hours).slice(-2);
+  minutes.innerHTML = ("0" + timeLeft.minutes).slice(-2);
+  seconds.innerHTML = ("0" + timeLeft.seconds).slice(-2);
+  milliseconds.innerHTML = ("00" + timeLeft.milliseconds).slice(-3);
+  date = new Date().getMilliseconds();
+}
+
+let blurUpdateTimer = () => {
+  initialCount -= 1000;
   let timeLeft = calculateTime();
 
   hours.innerHTML = ("0" + timeLeft.hours).slice(-2);

@@ -3,8 +3,10 @@ const hours = document.getElementById("hours");
 const minutes = document.getElementById("minutes");
 const seconds = document.getElementById("seconds");
 const milliseconds = document.getElementById("milliseconds");
+const millContainer = document.getElementById("milliseconds-container");
 const pauseBtn = document.getElementById("pausebtn");
 const resumeBtn = document.getElementById("resumebtn");
+
 
 // Fix timer no longer updating when tab is not in focus
 
@@ -22,7 +24,9 @@ let init = () => {
   seconds.innerHTML = ("0" + timeLeft.seconds).slice(-2);
   milliseconds.innerHTML = ("00" + timeLeft.milliseconds).slice(-3);
   timerInterval = setInterval(updateTimer , 10);
-
+  millContainer.addEventListener('click', () => {
+    millContainer.classList.toggle("hide-milliseconds");
+  });
   pauseBtn.addEventListener('click', pauseTimer);
   resumeBtn.addEventListener('click', resumeTimer);
 }

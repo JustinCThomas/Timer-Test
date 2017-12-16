@@ -20,6 +20,11 @@ button {
   cursor: pointer;
 }
 
-#milliseconds  {
+#milliseconds-container{
+  display: inline-block;
+}
 
+.hide-milliseconds {
+  opacity: 0;
+  /* display: none; */
 }

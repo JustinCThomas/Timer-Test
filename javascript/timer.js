@@ -8,13 +8,11 @@ const pauseBtn = document.getElementById("pausebtn");
 const resumeBtn = document.getElementById("resumebtn");
 
 // Todos:
-// Use Date().getTime() for milliseconds, not Date().getMilliseconds()
-// Fix/Change code that uses the Date Object.
 // Delete blurUpdateTimer function.
 // Change the original to have a parameter for amount of milliseconds
 
 let initialCount = (4 * 60 * 60 * 1000); // hours times minutes times seconds times milliseconds
-let date = new Date().getMilliseconds();
+let date = new Date().getTime();
 let difference;
 let timerInterval;
 let blurTimerInterval;
@@ -41,12 +39,12 @@ let addEvents = () => {
 
   window.addEventListener('focus', () => {
     if (activeButton === "pause") {
-      let currentTime = new Date().getMilliseconds();
+      let currentTime = new Date().getTime();
       clearInterval(blurTimerInterval);
 
       difference = (currentTime - date);
-      console.log(difference)
-      setTimeout(blurUpdateTimer, difference)
+      console.log(difference);
+      // setTimeout(blurUpdateTimer, difference);
 
       timerInterval = setInterval(updateTimer , 10);
     }
@@ -54,7 +52,7 @@ let addEvents = () => {
 
   window.addEventListener('blur', () => {
     if (activeButton === "pause") {
-      console.log(activeButton)
+      console.log(activeButton);
       clearInterval(timerInterval);
       blurTimerInterval = setInterval(blurUpdateTimer, 1000);
     }
@@ -82,7 +80,7 @@ let updateTimer = () => {
   minutes.innerHTML = ("0" + timeLeft.minutes).slice(-2);
   seconds.innerHTML = ("0" + timeLeft.seconds).slice(-2);
   milliseconds.innerHTML = ("00" + timeLeft.milliseconds).slice(-3);
-  date = new Date().getMilliseconds();
+  date = new Date().getTime();
 }
 
 let blurUpdateTimer = () => {
@@ -93,13 +91,13 @@ let blurUpdateTimer = () => {
   minutes.innerHTML = ("0" + timeLeft.minutes).slice(-2);
   seconds.innerHTML = ("0" + timeLeft.seconds).slice(-2);
   milliseconds.innerHTML = ("00" + timeLeft.milliseconds).slice(-3);
-  date = new Date().getMilliseconds();
+  date = new Date().getTime();
 }
 
 let pauseTimer = () => {
   if (activeButton === "pause") {
     clearInterval(timerInterval);
-    let currentTime = new Date().getMilliseconds();
+    let currentTime = new Date().getTime();
     difference = (currentTime - date);
     activeButton = "resume";
   }
